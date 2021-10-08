@@ -22,8 +22,8 @@ const App = () => {
       setError('Total players should be a number between 1 and 26')
     } else {
       setPlayers(_.shuffle(_.range(totalPlayers)))
-      setBtnDisabled(true)
     }
+    setBtnDisabled(true)
   }
 
   return (

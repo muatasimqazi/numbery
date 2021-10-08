@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import * as _ from 'lodash'
 import { playerLetters } from './constants'
 
 type PlayerProps = {
@@ -6,6 +7,14 @@ type PlayerProps = {
 }
 
 const Player = ({ players }: PlayerProps) => {
+  const playersTurns = _.sortBy(
+    _.map(players, (player: number, index: number) => ({
+      player: playerLetters[player],
+      turn: index + 1,
+    })),
+    (item) => item.player
+  )
+
   return (
     <table className="table-fixed w-full">
       <thead>
@@ -15,7 +24,7 @@ const Player = ({ players }: PlayerProps) => {
         </tr>
       </thead>
       <tbody>
-        {players.map((player, index) => {
+        {playersTurns.map((item, index) => {
           const odd = index % 2 === 1
           return (
             <tr key={index}>
@@ -28,7 +37,7 @@ const Player = ({ players }: PlayerProps) => {
                   'border px-4 py-2'
                 )}
               >
-                {playerLetters[player]}
+                {item.player}
               </td>
 
               <td
@@ -40,7 +49,7 @@ const Player = ({ players }: PlayerProps) => {
                   'border px-4 py-2'
                 )}
               >
-                {player + 1}
+                {item.turn}
               </td>
             </tr>
           )
